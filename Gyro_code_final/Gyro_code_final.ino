@@ -343,7 +343,7 @@ index++;
   }
   else
   lcd.print("Gyro stabilizing..");
-delay(70);
+delay(100);
 lcd.clear();
         #endif
         
