@@ -127,7 +127,7 @@ lcd.begin(16, 2);
     
     Serial.println(F("\nSend any character to begin DMP programming and demo: "));
     while (Serial.available() && Serial.read()); // empty buffer
-    lcd.print("Gyro disconnected");
+    lcd.print("waiting in 40");
     //while (!Serial.available());                 // wait for data
     while (Serial.available() && Serial.read()); // empty buffer again
 
@@ -285,7 +285,7 @@ obj.r = ypr[2] * 180/M_PI;
             valuesArr[index%2] = obj;
 index++;
              
-  if(index > 100)
+  if(index > 50)
   {
     int lastIndex =  (index+1)%2;
     pitch = valuesArr[index%2].p - valuesArr[lastIndex].p;
@@ -296,7 +296,9 @@ index++;
     if(roll<0)
     roll= (-1*roll);
     else;
-    bumpval= pitch+roll;
+    pitch=pitch*4;
+    roll=roll*4;
+    bumpval= round(pitch+roll);
     //pitch = abs(pitch);
     //roll = abs(roll);
   
@@ -310,18 +312,20 @@ index++;
       if (myFile) {
     Serial.print("Writing gyro_gps.txt...");
     //lcd.print("Writing gyro.txt...");
-    //delay(300);
+    delay(30);
     lcd.setCursor(0,1);
-    myFile.print(pitch);
-    lcd.print(pitch);
-    myFile.print(", ");
-    lcd.print(", ");
-    myFile.print(roll);
-    lcd.print(roll);
-    myFile.print(", ");
-    lcd.print(", ");
+    //myFile.print(pitch);
+    //lcd.print(pitch);
+    //myFile.print(", ");
+    //lcd.print(", ");
+    //myFile.print(roll);
+    //lcd.print(roll);
+    //myFile.print(", ");
+    //lcd.print(", ");
     lcd.print(bumpval);
     myFile.print(bumpval);
+    myFile.print(", ");
+    lcd.print(", ");
     myFile.println();
     // close the file:
     myFile.close();
