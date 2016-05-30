@@ -89,14 +89,14 @@ lcd.begin(16, 2);
 
   Serial.print("Initializing SD card...");
 
-  if (!SD.begin(53)) {
+  if (!SD.begin(53)) { //pin 53 is used for SD card, if it is not ready, an error is generated and is returned
     Serial.println("SD card initialization failed!");
     lcd.print("SD card initialization failed!");
     delay(2000);
   lcd.clear();
    return;
   }
-  Serial.println("SD card initialization done."); 
+  Serial.println("SD card initialization done."); //if the port is available
 //Initialize SD card code ends here
 
     // join I2C bus (I2Cdev library doesn't do this automatically)
@@ -114,18 +114,18 @@ lcd.begin(16, 2);
     Serial.println(F("Initializing I2C devices..."));
 
     mpu.initialize();
-    pinMode(INTERRUPT_PIN, INPUT);
+    pinMode(INTERRUPT_PIN, INPUT); // interrupt is not being used, so this might be removed in subsequent versions
 
     // verify connection
     Serial.println(F("Testing device connections..."));
-    Serial.println(mpu.testConnection() ? F("MPU6050 connection successful") : F("MPU6050 connection failed"));
+    Serial.println(mpu.testConnection() ? F("MPU6050 connection successful") : F("MPU6050 connection failed")); // MPU6050 connections verified
 
     // wait for ready
 
 
 
     
-    Serial.println(F("\nSend any character to begin DMP programming and demo: "));
+    Serial.println(F("\nSend any character to begin DMP programming and demo: ")); // This doesn't require a character anymore, maybe removed in subsequent release
     while (Serial.available() && Serial.read()); // empty buffer
     lcd.print("waiting in 40");
     //while (!Serial.available());                 // wait for data
@@ -158,7 +158,7 @@ lcd.begin(16, 2);
         //mpuIntStatus = mpu.getIntStatus();
 
         // set our DMP Ready flag so the main loop() function knows it's okay to use it
-        Serial.println(F("DMP ready! Waiting for first interrupt..."));
+        Serial.println(F("DMP ready! Waiting for first interrupt...")); //may get removed in the next release
         dmpReady = true;
 
         // get expected DMP packet size for later comparison
