@@ -47,14 +47,14 @@ float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gra
 uint8_t teapotPacket[14] = { '$', 0x02, 0,0, 0,0, 0,0, 0,0, 0x00, 0x00, '\r', '\n' };
 
 //int smallBups = 0, LargeBups = 0;
-class valuesPackage 
+class valuesPackage // a special class is created to keep two values of pitch as well as roll each time the code executes and the difference is later calculated to detect a road bump
 {
   public:
-    float p = 0, r =0; 
+    float p = 0, r =0; //pitch and roll's intermediate values before they are stored into an integer created above
 };
 
-int index = 0;
-valuesPackage valuesArr[2]; //os
+int index = 0; // index is used for controlling the stabilizing time of the gyro
+valuesPackage valuesArr[2]; //two values are kept in each cycle (of pitch and roll) which are later subtracted from each other to detect a bump
 
 // ================================================================
 // ===               INTERRUPT DETECTION ROUTINE                ===
@@ -62,7 +62,7 @@ valuesPackage valuesArr[2]; //os
 
 
 volatile bool mpuInterrupt = false;     // indicates whether MPU interrupt pin has gone high
-void dmpDataReady() {
+void dmpDataReady() { 
     mpuInterrupt = true;
 }
   
