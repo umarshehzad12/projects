@@ -2,25 +2,25 @@
 #include <I2Cdev.h> // I2C Library
 #include <SoftwareSerial.h> // Software Serial Library for using pin 10 and 11 as serial pins
 #include <TinyGPS.h>// GPS library for ublox
-using namespace std; /
+using namespace std; 
 #include "MPU6050_6Axis_MotionApps20.h" // MPU6050 is the gyro sensor that we're using
 #include "Wire.h" // Wire library is used for communicating the two arduino boards
 #include <SPI.h> //Used by SD card communication
 #include <SD.h> //SD card library
 
 MPU6050 mpu;
-File myFile;
-int getgps=2;
-int getgyro=2;
-int iter=0;
-unsigned long telapsed=0;
-float pitch=0, roll=0;
-int bumpval=0;
-LiquidCrystal lcd(12, 11, 6, 5, 4, 3);
+File myFile; // file initialized to be stored in SD card for storing the data
+int getgps=2; //This variable is used for controlling when to read the GPS coordinates 
+int getgyro=2; //This variable is used for controlling when to get the data from Gyro
+int iter=0; // to count the number of iterations before reset is required, for debugging purposes
+unsigned long telapsed=0; // to keep track of the time being elapsed after every loop
+float pitch=0, roll=0; // pitch and roll is stored into these variables
+int bumpval=0; // pitch and roll are later combined into this variable
+LiquidCrystal lcd(12, 11, 6, 5, 4, 3); // initializing the 16x2 LCD
 
-#define OUTPUT_READABLE_YAWPITCHROLL
+#define OUTPUT_READABLE_YAWPITCHROLL //Yaw pitch and roll are the three variables that are calculated by gyro using the i2c library
 
-#define INTERRUPT_PIN 2  // use pin 2 on Arduino Uno & most boards
+#define INTERRUPT_PIN 2  // use pin 2 on Arduino Uno & most boards 
 #define LED_PIN 13 // (Arduino is 13, Teensy is 11, Teensy++ is 6)
 bool blinkState = false;
 
