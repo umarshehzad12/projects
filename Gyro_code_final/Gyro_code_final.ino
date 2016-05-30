@@ -1,12 +1,12 @@
-#include <LiquidCrystal.h>
-#include <I2Cdev.h>
-#include <SoftwareSerial.h>
-#include <TinyGPS.h>
-using namespace std;
-#include "MPU6050_6Axis_MotionApps20.h"
-#include "Wire.h"
-#include <SPI.h>
-#include <SD.h>
+#include <LiquidCrystal.h> // LCD Library
+#include <I2Cdev.h> // I2C Library
+#include <SoftwareSerial.h> // Software Serial Library for using pin 10 and 11 as serial pins
+#include <TinyGPS.h>// GPS library for ublox
+using namespace std; /
+#include "MPU6050_6Axis_MotionApps20.h" // MPU6050 is the gyro sensor that we're using
+#include "Wire.h" // Wire library is used for communicating the two arduino boards
+#include <SPI.h> //Used by SD card communication
+#include <SD.h> //SD card library
 
 MPU6050 mpu;
 File myFile;
