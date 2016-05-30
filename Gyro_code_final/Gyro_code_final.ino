@@ -18,11 +18,11 @@ float pitch=0, roll=0; // pitch and roll is stored into these variables
 int bumpval=0; // pitch and roll are later combined into this variable
 LiquidCrystal lcd(12, 11, 6, 5, 4, 3); // initializing the 16x2 LCD
 
-#define OUTPUT_READABLE_YAWPITCHROLL //Yaw pitch and roll are the three variables that are calculated by gyro using the i2c library
+//#define OUTPUT_READABLE_YAWPITCHROLL //Yaw pitch and roll are the three variables that are calculated by gyro using the i2c library
 
 #define INTERRUPT_PIN 2  // use pin 2 on Arduino Uno & most boards 
-#define LED_PIN 13 // (Arduino is 13, Teensy is 11, Teensy++ is 6)
-bool blinkState = false;
+//#define LED_PIN 13 // (Arduino is 13, Teensy is 11, Teensy++ is 6)
+//bool blinkState = false;
 
 // MPU control/status vars
 bool dmpReady = false;  // set true if DMP init was successful
@@ -32,7 +32,7 @@ uint16_t packetSize;    // expected DMP packet size (default is 42 bytes)
 uint16_t fifoCount;     // count of all bytes currently in FIFO
 uint8_t fifoBuffer[64]; // FIFO storage buffer
 SoftwareSerial mySerial(10, 11); // RX, TX
-TinyGPS gps;
+TinyGPS gps; // an instance of the GPS is created here
 
 // orientation/motion vars
 Quaternion q;           // [w, x, y, z]         quaternion container
@@ -47,10 +47,10 @@ float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gra
 uint8_t teapotPacket[14] = { '$', 0x02, 0,0, 0,0, 0,0, 0,0, 0x00, 0x00, '\r', '\n' };
 
 //int smallBups = 0, LargeBups = 0;
-class valuesPackage
+class valuesPackage 
 {
   public:
-    float p = 0, r =0;
+    float p = 0, r =0; 
 };
 
 int index = 0;
