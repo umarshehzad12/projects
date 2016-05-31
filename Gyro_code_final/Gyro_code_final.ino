@@ -336,12 +336,12 @@ index++;
       getgps=1;
   }
   else
-  lcd.print("Gyro stabilizing.."); //if index<50, allow gyr to stabilize
+  lcd.print("Gyro stabilizing.."); //if index<50, allow gyro to stabilize
 delay(100);
 lcd.clear();
         #endif
-        
+
     }
-  
+
 }
 
