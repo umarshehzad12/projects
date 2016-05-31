@@ -18,7 +18,7 @@ float pitch=0, roll=0; // pitch and roll is stored into these variables
 int bumpval=0; // pitch and roll are later combined into this variable
 LiquidCrystal lcd(12, 11, 6, 5, 4, 3); // initializing the 16x2 LCD
 
-//#define OUTPUT_READABLE_YAWPITCHROLL //Yaw pitch and roll are the three variables that are calculated by gyro using the i2c library
+#define OUTPUT_READABLE_YAWPITCHROLL //Yaw pitch and roll are the three variables that are calculated by gyro using the i2c library
 
 #define INTERRUPT_PIN 2  // use pin 2 on Arduino Uno & most boards 
 //#define LED_PIN 13 // (Arduino is 13, Teensy is 11, Teensy++ is 6)
@@ -173,12 +173,6 @@ lcd.begin(16, 2);
         Serial.println(F(")"));
     }
 
-    // Arduino Mega Reset pin
-    //pinMode( 7, OUTPUT);
-  //digitalWrite( 7, LOW);
-  
-     
-
 
 }
 
@@ -190,14 +184,14 @@ lcd.begin(16, 2);
 
 void loop() {
 
- myFile = SD.open("gyro_gps.txt", FILE_WRITE);
+ myFile = SD.open("gyro_gps.txt", FILE_WRITE); //File is created and/or opened by Arduino
  //myFile.println();
  //myFile.println("took approximately 8 seconds to reset");
- Wire.requestFrom(8,15);    // request 8 bytes from slave device #8
- delay(50);
- if(myFile)
+ Wire.requestFrom(8,15);    // request 15 bytes from slave device #8
+ delay(50); // Giving time to GPS to copy all the coordinates into buffer
+ if(myFile) //Checks if the file in SD card is opened properly
  {
- if(getgps==1)
+ if(getgps==1) //only if the GPS is allowed to write on SD card, following code exectutes
  {
   while (Wire.available()) { // slave may send less than requested
     char c = Wire.read(); // receive a byte as character
@@ -205,9 +199,9 @@ void loop() {
     Serial.print(c); // print the character
     lcd.print(c);
   }
-  myFile.print(", ");
+  myFile.print(", ");//When !Wire.available(), do this
   myFile.close();
- getgyro=1;
+ getgyro=1; //Give permission to subsequent gyro code to run
  Serial.println();
  telapsed=millis();
  Serial.print("Iteration number: ");
@@ -224,7 +218,7 @@ else;
  Serial.print("Stuck in line 241");
  delay(300);
  lcd.clear();
- pinMode(7,OUTPUT);
+ pinMode(7,OUTPUT); //Resets Arduino mega, pin 7 is connected to RESET pin
 
 
  }
@@ -280,25 +274,25 @@ else;
 
 valuesPackage obj;
 
-obj.p = ypr[1] * 180/M_PI;
-obj.r = ypr[2] * 180/M_PI;
+obj.p = ypr[1] * 180/M_PI; //formula to calculate pitch
+obj.r = ypr[2] * 180/M_PI; //formula to calculate roll
             valuesArr[index%2] = obj;
 index++;
              
-  if(index > 50)
+  if(index > 50) //First 50 values are disregarded since gyro needs time to stabilize
   {
-    int lastIndex =  (index+1)%2;
-    pitch = valuesArr[index%2].p - valuesArr[lastIndex].p;
+    int lastIndex =  (index+1)%2; //0 if index==1 otherwise 1
+    pitch = valuesArr[index%2].p - valuesArr[lastIndex].p; //difference in values intensity of the bump
     roll = valuesArr[index%2].r - valuesArr[lastIndex].r;
     if(pitch<0)
-    pitch= (-1*pitch);
+    pitch= (-1*pitch); 
     else;
     if(roll<0)
     roll= (-1*roll);
     else;
-    pitch=pitch*4;
+    pitch=pitch*4; //sensitivity quadrupled
     roll=roll*4;
-    bumpval= round(pitch+roll);
+    bumpval= round(pitch+roll); //pitch and roll combined to make an integer value
     //pitch = abs(pitch);
     //roll = abs(roll);
   
@@ -308,7 +302,7 @@ index++;
       Serial.println(roll);Serial.println();
       //Writing Data to SD card now
       // if the file opened okay, write to it
-      if(getgyro==1){
+      if(getgyro==1){ //if gyro is allowed to write on SD card, execute following
       if (myFile) {
     Serial.print("Writing gyro_gps.txt...");
     //lcd.print("Writing gyro.txt...");
@@ -342,7 +336,7 @@ index++;
       getgps=1;
   }
   else
-  lcd.print("Gyro stabilizing..");
+  lcd.print("Gyro stabilizing.."); //if index<50, allow gyr to stabilize
 delay(100);
 lcd.clear();
         #endif
