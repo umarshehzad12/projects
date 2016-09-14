@@ -1,3 +1,5 @@
+/*The open source pothole detection kit has been developed at Make-i-stan in collaboration with ICFJ Knight Fellowships*/
+
 #include <SoftwareSerial.h>
 #include <TinyGPS.h>
 #include "Wire.h"
