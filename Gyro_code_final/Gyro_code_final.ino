@@ -1,3 +1,9 @@
+*/
+/*The open source pothole detection kit has been developed at Make-i-stan in collaboration with ICFJ Knight Fellowships*/
+/* We at Makeistan have made use of the example code provided by Jeff Rowberg's library
+ i.e. MPU6050, hence the copyright notice below
+ */
+ 
 /*I2Cdev device library code is placed under the MIT license
 Copyright (c) 2012 Jeff Rowberg
 
@@ -20,11 +26,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ===============================================
 */
-
-/* We at Makeistan have made use of the example code provided by Jeff Rowberg's library
- i.e. MPU6050, hence the copyright notice above
- 
- */
 
 #include <LiquidCrystal.h> // LCD Library
 #include <I2Cdev.h> // I2C Library
