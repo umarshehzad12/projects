@@ -1,4 +1,4 @@
-*/
+
 /*The open source pothole detection kit has been developed at Make-i-stan in collaboration with ICFJ Knight Fellowships*/
 /* We at Makeistan have made use of the example code provided by Jeff Rowberg's library
  i.e. MPU6050, hence the copyright notice below
