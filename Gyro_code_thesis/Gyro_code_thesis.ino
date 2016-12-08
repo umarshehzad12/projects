@@ -302,18 +302,21 @@ else;
             mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
 
 valuesPackage obj;
-
+obj.y = ypr[0] * 180/M_PI; //formula to calculate pitch
 obj.p = ypr[1] * 180/M_PI; //formula to calculate pitch
 obj.r = ypr[2] * 180/M_PI; //formula to calculate roll
-            valuesArr[index%2] = obj;
+            valuesArr[index%1] = obj.y;
+            valuesArr[index%2] = obj.p;
+            valuesArr[index%3] = obj.r;
 index++;
              
   if(index > 50) //First 50 values are disregarded since gyro needs time to stabilize
   {
-    int lastIndex =  (index+1)%2; //0 if index==1 otherwise 1
-    pitch = valuesArr[index%2].p - valuesArr[lastIndex].p; //difference in values intensity of the bump
-    roll = valuesArr[index%2].r - valuesArr[lastIndex].r;
-    if(pitch<0)
+    int lastIndex =  (index+1)%3; //0 if index==1 otherwise 1
+    yaw = valuesArr[index%1]
+    pitch = valuesArr[index%2]
+    roll = valuesArr[index%3]
+    /*if(pitch<0)
     pitch= (-1*pitch); 
     else;
     if(roll<0)
@@ -325,7 +328,7 @@ index++;
     //pitch = abs(pitch);
     //roll = abs(roll);
   
-  
+  */
      Serial.print("-----------------------");
         Serial.print(pitch);Serial.print(" ");
       Serial.println(roll);Serial.println();
@@ -337,19 +340,23 @@ index++;
     //lcd.print("Writing gyro.txt...");
     delay(30);
     lcd.setCursor(0,1);
-    //myFile.print(pitch);
-    //lcd.print(pitch);
-    //myFile.print(", ");
-    //lcd.print(", ");
-    //myFile.print(roll);
-    //lcd.print(roll);
-    //myFile.print(", ");
-    //lcd.print(", ");
-    lcd.print(bumpval);
+    myFile.print(yaw);
+    lcd.print(yaw);
+    myFile.print(", ")
+    myFile.print(pitch);
+    lcd.print(pitch);
+    myFile.print(", ");
+    lcd.print(", ");
+    myFile.print(roll);
+    lcd.print(roll);
+    myFile.print(", ");
+    lcd.print(", ");
+    /*lcd.print(bumpval);
     myFile.print(bumpval);
     myFile.print(", ");
     lcd.print(", ");
     myFile.println();
+    */
     // close the file:
     myFile.close();
     Serial.println("done.");   
