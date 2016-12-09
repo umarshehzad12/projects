@@ -79,11 +79,11 @@ uint8_t teapotPacket[14] = { '$', 0x02, 0,0, 0,0, 0,0, 0,0, 0x00, 0x00, '\r', '\
 class valuesPackage // a special class is created to keep two values of pitch as well as roll each time the code executes and the difference is later calculated to detect a road bump
 {
   public:
-    float y=0, p = 0, r =0; //pitch and roll's intermediate values before they are stored into an integer created above
+    float y = 0, p = 0, r =0; //pitch and roll's intermediate values before they are stored into an integer created above
 };
 
 int index = 0; // index is used for controlling the stabilizing time of the gyro
-valuesPackage valuesArr[3]; //two values are kept in each cycle (of pitch and roll) which are later subtracted from each other to detect a bump
+float valuesArr[3]; //two values are kept in each cycle (of pitch and roll) which are later subtracted from each other to detect a bump
 
 // ================================================================
 // ===               INTERRUPT DETECTION ROUTINE                ===
@@ -305,17 +305,17 @@ valuesPackage obj;
 obj.y = ypr[0] * 180/M_PI; //formula to calculate pitch
 obj.p = ypr[1] * 180/M_PI; //formula to calculate pitch
 obj.r = ypr[2] * 180/M_PI; //formula to calculate roll
-            valuesArr[index%1] = obj.y;
-            valuesArr[index%2] = obj.p;
-            valuesArr[index%3] = obj.r;
+            valuesArr[0] = obj.y;
+            valuesArr[1] = obj.p;
+            valuesArr[2] = obj.r;
 index++;
              
   if(index > 50) //First 50 values are disregarded since gyro needs time to stabilize
   {
     int lastIndex =  (index+1)%3; //0 if index==1 otherwise 1
-    yaw = valuesArr[index%1]
-    pitch = valuesArr[index%2]
-    roll = valuesArr[index%3]
+    yaw = valuesArr[index%1];
+    pitch = valuesArr[index%2];
+    roll = valuesArr[index%3];
     /*if(pitch<0)
     pitch= (-1*pitch); 
     else;
@@ -342,7 +342,7 @@ index++;
     lcd.setCursor(0,1);
     myFile.print(yaw);
     lcd.print(yaw);
-    myFile.print(", ")
+    myFile.print(", ");
     myFile.print(pitch);
     lcd.print(pitch);
     myFile.print(", ");
