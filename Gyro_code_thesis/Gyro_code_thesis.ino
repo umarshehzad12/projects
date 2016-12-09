@@ -338,7 +338,7 @@ index++;
       if (myFile) {
     Serial.print("Writing gyro_gps.txt...");
     //lcd.print("Writing gyro.txt...");
-    delay(30);
+    delay(3);
     lcd.setCursor(0,1);
     myFile.print(yaw);
     lcd.print(yaw);
