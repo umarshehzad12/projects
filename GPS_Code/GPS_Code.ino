@@ -12,7 +12,7 @@ void setup()
   Wire.begin(8);     // Open serial communications and wait for port to open:
   Serial.begin(9600);     // set the data rate for the SoftwareSerial port
   mySerial.begin(9600);
-  delay(500);
+  delay(50);
   Wire.onRequest(requestEvent); // regi
 }
   //3147636, 7434279

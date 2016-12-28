@@ -310,12 +310,13 @@ obj.r = ypr[2] * 180/M_PI; //formula to calculate roll
             valuesArr[2] = obj.r;
 index++;
              
-  if(index > 50) //First 50 values are disregarded since gyro needs time to stabilize
+  if(index > 100) //First 50 values are disregarded since gyro needs time to stabilize
   {
     int lastIndex =  (index+1)%3; //0 if index==1 otherwise 1
-    yaw = valuesArr[index%1];
+    /*yaw = valuesArr[index%1];
     pitch = valuesArr[index%2];
     roll = valuesArr[index%3];
+    */
     /*if(pitch<0)
     pitch= (-1*pitch); 
     else;
@@ -338,19 +339,24 @@ index++;
       if (myFile) {
     Serial.print("Writing gyro_gps.txt...");
     //lcd.print("Writing gyro.txt...");
-    delay(3);
+    delay(2);
     lcd.setCursor(0,1);
-    myFile.print(yaw);
-    lcd.print(yaw);
+    
+    myFile.print(valuesArr[0]);
+    delay(1);
+    lcd.print(valuesArr[0]);
     myFile.print(", ");
-    myFile.print(pitch);
-    lcd.print(pitch);
+    delay(1);
+    lcd.print(", ");
+    myFile.print(valuesArr[1]);
+    delay(1);
+    lcd.print(valuesArr[1]);
     myFile.print(", ");
     lcd.print(", ");
-    myFile.print(roll);
-    lcd.print(roll);
-    myFile.print(", ");
-    lcd.print(", ");
+    myFile.println(valuesArr[2]);
+    lcd.println(valuesArr[2]);
+    
+    
     /*lcd.print(bumpval);
     myFile.print(bumpval);
     myFile.print(", ");
@@ -373,7 +379,7 @@ index++;
   }
   else
   lcd.print("Gyro stabilizing.."); //if index<50, allow gyro to stabilize
-delay(100);
+delay(90);
 lcd.clear();
         #endif
 
