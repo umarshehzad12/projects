@@ -1,7 +1,8 @@
-#!/home/pi/rpi_arduino python
-chmod +x serial_test.py
-#!/home/pi/rpi_arduino python
-chmod +x RPiGyroCode2.py
-python serial_test.py
-python RPiGyroCode2.py
+#!/home/pi python
+#chmod +x RPiGyroCode2.py
+sleep 10 #10 Sec Delay
+cd /home/pi
+sudo python RPiGyroCode2.py&
 
+sudo python serial_test.py&
+avconv -f video4linux2 -i /dev/video0 video.avi
